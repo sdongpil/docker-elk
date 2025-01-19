@@ -98,9 +98,26 @@ services:
       - elasticsearch
     restart: unless-stopped
 
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=sparta
+      - MYSQL_ROOT_PASSWORD=root
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - elk
+
 networks:
   elk:
     driver: bridge
 
 volumes:
   elasticsearch:
+  mysql_data:
